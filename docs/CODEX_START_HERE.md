@@ -10,9 +10,12 @@ Read these files in order before making non-trivial changes:
 
 1. `docs/CODEX_START_HERE.md`
 2. `docs/PROJECT_GOAL_AND_ROLES.md`
-3. `docs/TODO_ACCEPTANCE_BOARD.md`
-4. `docs/CURRENT_ACCEPTANCE_PLAN_20260509.md`
-5. Relevant specialist docs only when the active task needs them:
+3. `docs/WORKFLOW.md`
+4. `docs/TODO_ACCEPTANCE_BOARD.md`
+5. `docs/CURRENT_ACCEPTANCE_PLAN_20260509.md`
+6. Relevant specialist docs only when the active task needs them:
+   - `docs/REQUIREMENT_INTAKE_TEMPLATE.md`
+   - `docs/SESSION_CLOSEOUT_TEMPLATE.md`
    - `docs/deepseek_claude_code_isolation.md`
    - `docs/SESSION_REQUIREMENTS_20260509.md`
    - `docs/CURRENT_TASK_BOARD_20260509.md`
@@ -23,9 +26,10 @@ If these files disagree, use this priority:
 
 1. Newest explicit user message.
 2. `TODO_ACCEPTANCE_BOARD.md`.
-3. `PROJECT_GOAL_AND_ROLES.md`.
-4. `CURRENT_ACCEPTANCE_PLAN_20260509.md`.
-5. Older historical docs.
+3. `WORKFLOW.md`.
+4. `PROJECT_GOAL_AND_ROLES.md`.
+5. `CURRENT_ACCEPTANCE_PLAN_20260509.md`.
+6. Older historical docs.
 
 ## Per-Turn Ritual
 
@@ -34,11 +38,12 @@ Before acting:
 1. Identify the newest user request. Do not continue an older task just because it is familiar.
 2. Compare the request with `TODO_ACCEPTANCE_BOARD.md`.
 3. If the request adds, changes, or cancels work, update the board.
-4. Separate acceptance from implementation:
+4. Use `REQUIREMENT_INTAKE_TEMPLATE.md` for broad requests.
+5. Separate acceptance from implementation:
    - Acceptance is what the user must see or approve.
    - Implementation is Codex's responsibility unless the user explicitly wants to choose.
-5. If ambiguity changes acceptance, ask a short question.
-6. If ambiguity is only implementation detail, choose conservatively and document the choice.
+6. If ambiguity changes acceptance, ask a short question.
+7. If ambiguity is only implementation detail, choose conservatively and document the choice.
 
 During work:
 
@@ -53,8 +58,9 @@ During work:
 Before final response:
 
 1. Update `TODO_ACCEPTANCE_BOARD.md` if status changed.
-2. Mention what changed, what was verified, and what remains.
-3. If something is blocked, name the exact blocker and the next safe action.
+2. Use `SESSION_CLOSEOUT_TEMPLATE.md` for meaningful sessions.
+3. Mention what changed, what was verified, and what remains.
+4. If something is blocked, name the exact blocker and the next safe action.
 
 ## Current Mainline
 
@@ -81,4 +87,3 @@ Current mainline:
 - Do not let implementation details leak into Xiya's in-character Discord replies.
 - Do not use brittle keyword fallbacks for semantic mode/place/play/weather routing when an LLM decision layer is available.
 - Do not put normal/private content into Opus or the user's existing Claude Code research environment.
-

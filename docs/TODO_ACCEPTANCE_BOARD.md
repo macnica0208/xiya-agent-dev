@@ -16,7 +16,7 @@ This is the durable project board. When the user gives a new requirement, update
 
 | ID | Status | Owner | Requirement | Acceptance The User Should See | Evidence / Current State | Next Action |
 | --- | --- | --- | --- | --- | --- | --- |
-| WF-01 | ACTIVE | Codex | Stop losing the thread after compaction or sleep. | A stable entry doc, role doc, and board exist; future sessions know what to read first. | `docs/CODEX_START_HERE.md`, `docs/PROJECT_GOAL_AND_ROLES.md`, this board. | Keep these files updated whenever requirements change. |
+| WF-01 | ACTIVE | Codex | Stop losing the thread after compaction or sleep. | A stable entry doc, role doc, workflow doc, intake template, closeout template, and board exist; future sessions know what to read first and how to close work. | `docs/CODEX_START_HERE.md`, `docs/PROJECT_GOAL_AND_ROLES.md`, `docs/WORKFLOW.md`, `docs/REQUIREMENT_INTAKE_TEMPLATE.md`, `docs/SESSION_CLOSEOUT_TEMPLATE.md`, this board. | Commit and push the workflow scaffold, then keep these files updated whenever requirements change. |
 | NAI-01 | ACTIVE | Codex | Improve NAI prompt pipeline without wasting prompt budget. | v13 default, v14 optional, style strings pure, quality separated, char ref gated, food/scenery/person routing separated, long prompts checked by actual request/logs. | `CURRENT_ACCEPTANCE_PLAN_20260509.md`; recent Discord NAI evidence IDs are recorded there. | Continue from latest pipeline, not old SFW numbered tests. |
 | NAI-02 | ACTIVE | Codex | Map old normal-mode robot structure into the new pipeline shell. | Accessories/global modes such as veil, blindfold, collar, bracelet, anklet, outerwear, dancing are represented structurally; content can later be filled by DS. | Old docs/assets exist; not fully mapped in a single acceptance artifact yet. | Produce schema/map and actual maximum-length request log before claiming done. |
 | CREATIVE-01 | NEXT | Codex | Story/co-writing/RP must persist useful memory and final drafts. | A story can be researched, co-written, saved locally, and later used for RP continuity. | Linked acceptance already has one report, but deeper long-form memory design remains. | Expand persistence design and run next visible end-to-end test when requested. |
@@ -47,3 +47,5 @@ This is the durable project board. When the user gives a new requirement, update
 - Do not delete completed rows immediately. Move them to `DONE` so future Codex can see they are settled.
 - If a new user message conflicts with this board, update the board and note why.
 - If Codex cannot prove a claim, keep the row `ACTIVE` or `BLOCKED`.
+- Broad requests should be normalized through `docs/REQUIREMENT_INTAKE_TEMPLATE.md`.
+- Meaningful sessions should close through `docs/SESSION_CLOSEOUT_TEMPLATE.md`.
