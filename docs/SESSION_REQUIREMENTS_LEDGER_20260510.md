@@ -8,6 +8,10 @@ This ledger records what the user has stated in this late-night requirements ses
 - Codex is the contractor / PM / architect / implementer / tester.
 - Codex must ask requirements questions before self-defining the finished product.
 - Codex should give recommended defaults, but should not pretend user acceptance is already given.
+- User examples are hints, not sacred specs.
+- Old assets are important design references, but they are not automatically correct either.
+- Codex must use judgment: study old mechanisms carefully, propose improvements when useful, preserve fallback paths, and explain tradeoffs or impossible pieces.
+- For risky design experiments, use safe Git branches or small reversible commits when comparison is useful.
 - Codex should not stop merely because the user leaves or because one hour passes.
 - The user's "one hour" means a check-in point, not a stop time.
 - Goal is to continue until complete acceptance, or until a real blocker is documented.
@@ -18,6 +22,8 @@ This ledger records what the user has stated in this late-night requirements ses
 
 - Product tests use real Discord, with Codex bot talking to Xiya when user is away.
 - Engineering reports, standalone test images, project status, and anything that should not pollute Xiya memory go through Codex bot DM to the user.
+- Meaningful engineering progress should be reported as it happens, not batched only at the end.
+- For image tests, the DM report should say what the image was meant to prove, whether it passed, why it passed/failed, and what the next fix is.
 - Xiya should not appear to participate in project management.
 
 ## SFW Persona / Living Feel
@@ -91,6 +97,8 @@ This ledger records what the user has stated in this late-night requirements ses
 - Two-person interaction must show both people if the action is the subject.
 - Add support for tension perspectives: upper-body focus, dramatic view, over-the-shoulder, low-angle, silhouette, dynamic scene transition.
 - Visual audit must consider background, subject, action, camera, aspect ratio, clothes, accessories, perspective, and anatomy.
+- The main product focus is Xiya herself. The owner projection and scene exist to support Xiya, not to steal the image unless the requested subject is explicitly scenery or a two-person action.
+- If the image is about Xiya in a tram/dream/landscape, keep Xiya as the clear subject. If the image is about the tram/landscape itself, let the scene dominate.
 
 ## Landscape / Food Styles
 
@@ -121,7 +129,7 @@ This ledger records what the user has stated in this late-night requirements ses
   - no character reference.
 - Character Reference costs additional Anlas and should be used sparingly.
 - First validate composition with no char ref and long identity string.
-- Then use char ref for final identity checks if worth it.
+- Then, only after the worst no-char-ref structure passes, use char ref once for final identity checks if worth it.
 - Prior char-ref failures: purple hair and silver-white hair. These are not acceptable.
 - Compact char-ref scaffold:
   `1girl, side braid, cat ears, cat tail, thigh strap, purple amethyst eyes`.
@@ -142,10 +150,13 @@ This ledger records what the user has stated in this late-night requirements ses
 ## Old Normal-Mode Mapping As SFW Stress
 
 - User does not want Codex to write unsafe content.
-- Codex should inspect/abstract old normal-mode complexity into SFW structural dimensions.
+- Codex should inspect/abstract old normal-mode complexity into SFW structural dimensions and design from it, not treat the user's oral examples as the only source.
+- The old system has mechanisms worth studying: priority, 3-slot play competition, mark grouping, body-part de-duplication, global modes, ability-filtered activities, and environment affordances.
+- New SFW should adapt those mechanisms where useful, not mechanically copy all old behavior.
 - Map old surfaces into neutral:
   - equipment slots,
   - accessories,
+  - SFW marks/body decoration such as star stickers, heart stickers, glitter, temporary face paint, and stage makeup,
   - clothing overlays,
   - global actions,
   - props,
@@ -153,7 +164,7 @@ This ledger records what the user has stated in this late-night requirements ses
   - camera/pose demands,
   - scene/weather demands,
   - continuity constraints.
-- Maximum stress case should include many simultaneous constraints, e.g. veil, blindfold, collar/choker, bracelet, anklet, outerwear/cloak, role outfit, dance/global movement, piano/pipe organ, food prop, footwear/hosiery continuity, fantasy/magic-school scene, style/quality, and true-tail red cube.
+- Maximum stress case should be derived from the real old normal-mode pipeline, not only the user's oral examples. It should include many simultaneous constraints, e.g. veil, blindfold, collar/choker, bracelet, anklet, SFW mark/sticker layer, outerwear/cloak, role outfit, dance/global movement, piano/pipe organ, food prop, footwear/hosiery continuity, fantasy/magic-school scene, style/quality, and true-tail red cube.
 - Goal is to prove prompt budget and schema, not to reproduce unsafe content.
 
 ## Claude Code / DeepSeek Isolation

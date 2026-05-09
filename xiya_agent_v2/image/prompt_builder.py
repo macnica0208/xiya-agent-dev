@@ -34,10 +34,11 @@ PROMPT_LAYER_ORDER = (
     "count_and_composition",
     "action",
     "clothes_accessories_props",
+    "sfw_marks_and_body_decoration",
     "scene_weather",
     "character_rendering_material",
-    "quality",
     "artist_style",
+    "quality",
 )
 
 FOOD_STYLE_TAGS = [
@@ -91,6 +92,29 @@ SFW_ACCESSORY_TAGS = {
     "collar": ["1.4::simple black choker collar::"],
     "bracelet": ["1.3::delicate wrist bracelet::"],
     "anklet": ["1.3::delicate ankle anklet::"],
+}
+
+SFW_MARK_TAGS = {
+    "star_sticker": [
+        "1.5::small gold star sticker on cheek::",
+        "cute cheek star sticker",
+    ],
+    "heart_sticker": [
+        "1.5::small pink heart sticker on cheek::",
+        "cute cheek heart sticker",
+    ],
+    "glitter": [
+        "tiny safe glitter stickers on cheeks and arms",
+        "subtle sparkly body stickers",
+    ],
+    "face_paint": [
+        "temporary cute face paint",
+        "small decorative cheek mark",
+    ],
+    "stage_makeup": [
+        "soft SFW stage makeup",
+        "subtle glitter makeup around eyes",
+    ],
 }
 
 SFW_DAILY_OUTFIT = [
@@ -659,6 +683,7 @@ def build_sfw_image_prompt(
     reference_images = _character_reference_images_for(style_domain, assets)
     outfit_parts = _sfw_outfit_parts(case, extra_tags=extra_tags, allow_no_character=allow_no_character)
     accessory_parts = _sfw_accessory_parts(raw_extra, lower_body_only=compact_footwear_prompt) if not allow_no_character else []
+    mark_parts = _sfw_mark_parts(raw_extra, lower_body_only=compact_footwear_prompt) if not allow_no_character else []
     if compact_footwear_prompt:
         outfit_parts = [
             "fully clothed",
@@ -709,6 +734,7 @@ def build_sfw_image_prompt(
                     *outfit_parts,
                     *accessory_parts,
             ]
+            mark_parts = []
             render_parts = ["clean flat-color anime illustration", *render_parts]
         else:
             if str(assets.get("using_character_reference_scaffold") or "") == "1":
@@ -769,6 +795,7 @@ def build_sfw_image_prompt(
         "count_and_composition": composition_parts,
         "action": action_parts,
         "clothes_accessories_props": clothes_parts,
+        "sfw_marks_and_body_decoration": mark_parts,
         "scene_weather": scene_parts,
         "character_rendering_material": render_parts,
         "artist_style": style_parts,
@@ -828,7 +855,7 @@ def build_sfw_image_prompt(
         "low quality",
     ]
     if "red cube" in raw_extra:
-        negative_parts.extend(["standing on red cube", "red cube pedestal", "large red cube platform", "cube under both feet"])
+        negative_parts.extend(["standing on a cube", "cube pedestal", "large cube platform", "object under both feet"])
     outfit_profile = str(case.get("outfit_profile") or "daily").strip().lower()
     if outfit_profile == "daily" and not dance_requested:
         daily_negatives = ["jeans", "long pants", "pants only", "leggings"]
@@ -1153,6 +1180,23 @@ def _sfw_accessory_parts(raw: str, *, lower_body_only: bool = False) -> list[str
             continue
         if any(marker in raw for marker in keys):
             parts.extend(SFW_ACCESSORY_TAGS[key])
+    return parts[:8]
+
+
+def _sfw_mark_parts(raw: str, *, lower_body_only: bool = False) -> list[str]:
+    if lower_body_only:
+        return []
+    parts: list[str] = []
+    markers = {
+        "star_sticker": ("star sticker", "gold star sticker", "星星贴纸", "星星脸贴", "星星贴", "星星标记"),
+        "heart_sticker": ("heart sticker", "pink heart sticker", "love sticker", "爱心贴纸", "心形贴纸", "爱心脸贴", "小爱心"),
+        "glitter": ("glitter sticker", "glitter stickers", "body glitter", "亮片", "闪粉", "闪片", "亮晶晶贴纸"),
+        "face_paint": ("face paint", "cheek mark", "temporary mark", "脸颊彩绘", "脸上彩绘", "临时彩绘", "脸贴", "贴纸"),
+        "stage_makeup": ("stage makeup", "dance makeup", "soft makeup", "舞台妆", "跳舞妆"),
+    }
+    for key, keys in markers.items():
+        if any(marker in raw for marker in keys):
+            parts.extend(SFW_MARK_TAGS[key])
     return parts[:8]
 
 
@@ -1579,6 +1623,23 @@ def _visual_control_extra_tag_should_skip(tag: str) -> bool:
             "黑丝",
             "丝袜",
             "连裤袜",
+            "star sticker",
+            "heart sticker",
+            "glitter sticker",
+            "body glitter",
+            "face paint",
+            "cheek mark",
+            "stage makeup",
+            "星星贴纸",
+            "爱心贴纸",
+            "心形贴纸",
+            "亮片",
+            "闪粉",
+            "脸颊彩绘",
+            "临时彩绘",
+            "脸贴",
+            "贴纸",
+            "舞台妆",
         )
     )
 
@@ -1593,8 +1654,9 @@ def _tail_diagnostic_parts(extra_tags: list[str] | None) -> list[str]:
         return []
     return [
         "not a pedestal",
-        "2.2::small bright red cube floor prop beside Xiya's left foot::",
-        "2.0::red cube clearly visible on floor::",
+        "small bright red cube in the bottom right foreground on the floor",
+        "separate red cube prop, not under the character",
+        "3.0::bright red cube clearly visible on the floor::",
     ]
 
 
