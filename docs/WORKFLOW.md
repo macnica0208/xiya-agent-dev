@@ -59,6 +59,7 @@ Every non-trivial task follows this loop:
    - Commit stable checkpoints.
    - Push after important project-memory changes or when the user asks.
    - Never stage secrets, runtime data, private assets, or unrelated bulk files.
+   - Never push API keys, Discord tokens, NovelAI credentials, DeepSeek/Kimi keys, OAuth data, or raw private archives, even if the user casually says it is fine. If secure sharing is needed, design a separate secret-storage plan first.
 
 7. Closeout
    - Use `SESSION_CLOSEOUT_TEMPLATE.md` for meaningful sessions.
@@ -148,6 +149,7 @@ First-stage repo policy:
 - Safe docs and workflow memory can be committed.
 - Source code can be committed only after a file-by-file secret/content audit.
 - Runtime data, generated images, private assets, databases, logs, archives, and tokens stay out unless the user explicitly requests a separate secure storage plan.
+- User convenience does not override secret safety. Keys can be used from local ignored config/environment, but not committed or attached to GitHub reports.
 
 ## What "Done" Means
 
