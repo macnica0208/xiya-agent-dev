@@ -42,6 +42,7 @@ Every non-trivial task follows this loop:
 4. Verification
    - Use the right proof for the task:
      - Discord-visible message/image for user-facing bot behavior.
+     - Codex-only DM or a dedicated Codex report channel for engineering progress reports.
      - Local report path for batch acceptance.
      - Test output for code behavior.
      - NAI metadata/image path for image pipeline work.
@@ -103,6 +104,24 @@ Codex must not:
 - Claim a test passed without checking actual output.
 - Say a task is done without an artifact.
 - Put normal/private content into Opus or the existing Claude Code research environment.
+- Send engineering reports through Xiya's in-character channel in a way that makes Xiya appear to participate in project management.
+
+## Discord Reporting Separation
+
+There are two different Discord surfaces:
+
+1. Product acceptance surface.
+   - Used to test Xiya's real user-facing behavior.
+   - Xiya may reply there.
+   - Messages/images there can affect user perception and should stay in-character unless explicitly testing internals.
+
+2. Codex report surface.
+   - Used for engineering progress, file attachments, reports, Git hashes, and test summaries.
+   - Preferred target is a private DM to the user from the operator/report bot.
+   - Second-best target is a dedicated private channel containing the user and Codex/report bot, with Xiya excluded.
+   - Do not post project-management summaries into Xiya's roleplay/life chat unless the user explicitly asks.
+
+If no Codex report surface is configured, report in the Codex chat and local Markdown/Git only. Use Xiya's Discord channel only for acceptance cases the user needs to see in context.
 
 ## Git Rules
 
@@ -130,4 +149,3 @@ First-stage repo policy:
 6. Git commit exists for project-memory or code changes when appropriate.
 
 If any one is missing, the task is still `ACTIVE` or `BLOCKED`.
-
