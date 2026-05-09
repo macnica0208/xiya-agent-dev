@@ -94,6 +94,7 @@ Current blocker on 2026-05-09:
   - SSH alias: `github-xiya`
   - Project remote: `git@github-xiya:macnica0208/xiya-agent-dev.git`
   - SSH test result: authenticated as `macnica0208`.
+  - First safe docs-only commit pushed: `a33af1b`.
 
 Safe fix: authenticate Git as `macnica0208` or grant `s20175zhang-svg` write access to the repo. For separation, authenticating as `macnica0208` with a dedicated SSH key is the cleanest route.
 
