@@ -40,6 +40,26 @@ Compact char-ref scaffold:
 
 No-char-ref fallback must use the longer Xiya identity string so identity does not collapse.
 
+Character Reference must be identity-audited. Prior failures included wrong hair color drift, such as purple hair or silver-white hair. A generated image does not pass just because it is attractive.
+
+Required identity checks when Xiya is present:
+
+- blue / light blue hair, not purple hair,
+- purple/amethyst eyes,
+- cat ears,
+- cat tail,
+- side braid when expected,
+- overall face and body feel close to the provided reference,
+- no unwanted character replacement by canon role.
+
+Recommended workflow:
+
+1. Validate composition without char ref using the long Xiya prompt.
+2. Only when composition/action/background are acceptable, spend a small char-ref final check.
+3. Use the user's compact scaffold with the reference image:
+   `1girl, side braid, cat ears, cat tail, thigh strap, purple amethyst eyes`.
+4. If identity drifts, stop and adjust. Do not keep spending char ref generations blindly.
+
 ## Known Style Strings
 
 These are artist/style layers, not character strings.
@@ -98,6 +118,30 @@ Routing:
 
 The user still needs to provide five preferred scenery examples/prompts. Until then, scenery styles are provisional and must be labeled as such.
 
+The user provided five scenery prompt references on 2026-05-09. They establish a `grand_fantasy_concept` scenery style:
+
+- masterpiece / best quality / ultra-detailed,
+- epic scale,
+- concept art,
+- matte painting,
+- wide shot,
+- cinematic lighting,
+- volumetric fog,
+- towering cliffs,
+- mist/clouds,
+- white temple/church/sky-palace,
+- open sky,
+- foreground river/church/beach/ships,
+- Raphael Lacoste-like environment direction.
+
+Use this only for scenery/environment-first images. Do not append it after human v13/v14 portraits unless the scene is genuinely environment-led.
+
+Food style remains its own domain and must be verified with:
+
+- pure food still life,
+- Xiya selfie with food,
+- third-person Xiya eating food.
+
 ## Composition Rules
 
 The image must serve intent:
@@ -140,16 +184,27 @@ Validation methods:
 
 1. Dry-run prompt assembly with visible layer lengths.
 2. Actual NAI request metadata saved locally.
-3. Tail sentinel placed after all normal layers during a stress test.
+3. Tail sentinel placed at the true final end of the positive prompt during a stress test.
 4. Visual audit checks whether the sentinel appears.
 5. If the sentinel disappears, shorten or reorder layers and rerun.
 
 Sentinel method:
 
-- Put a simple, visually obvious red box/cube/sign at the true final tail.
-- The sentinel should be after quality and artist/style during stress tests.
+- Put a simple, visually obvious red box/cube/sign at the true final end of the positive prompt.
+- "True final end" means after every normal positive-prompt layer: not merely after object tags, not merely after artist/style, not merely after quality, and not before any later positive modifier.
+- The sentinel must be the last positive concept in the final request payload.
 - A visible sentinel proves at least the tail survived for that prompt.
 - Remove the sentinel from production prompts.
+- Do not rely on local tokenizers for acceptance. They are only rough diagnostics.
+- Do not rely on OCR or judging whether the style "looks right". The pass/fail object should be visually obvious without reading text.
+
+Maximum old-normal-mode structural stress case:
+
+```text
+long Xiya no-char-ref identity, role/cosplay outfit, veil, blindfold, collar/choker, bracelet, anklet, outerwear/cloak, dancing/global movement, piano or pipe-organ action, food prop in hand or near mouth, footwear/hosiery continuity, fantasy interior or magic-school scene, rendering/quality, v13/v14 artist/style, final red-box sentinel
+```
+
+This case is a SFW structural replacement for old normal-mode complexity. It must not copy unsafe content, but it must preserve the old pipeline's burden: many simultaneous equipment/action/scene constraints.
 
 ## Cost Rules
 
@@ -168,6 +223,12 @@ Mark as paid/risky:
 - Character Reference: `paid_5_anlas`.
 - Image2Image / image base: `image_base_paid_risk` until verified.
 - Any unknown new API feature: verify with official account/API behavior before assuming.
+
+Cost acceptance:
+
+- Text/model calls may cost money and are acceptable for validation, but should still produce useful evidence.
+- Free-candidate NAI tests should be used first for prompt shape and composition.
+- Paid char-ref tests should be rare, named, and recorded in metadata.
 
 ## Visual Audit Before Success
 

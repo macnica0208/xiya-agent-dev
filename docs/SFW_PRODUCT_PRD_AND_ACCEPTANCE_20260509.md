@@ -203,7 +203,22 @@ The autonomous SFW interest arc is the main product story, but it does not repla
 4. NAI long prompt / tail survival.
    - Dry-run is not enough.
    - NovelAI can return an image while silently ignoring overlong tail content.
-   - A real red-box/cube sentinel test must place the sentinel after all normal layers and confirm it appears visually.
+   - A real red-box/cube sentinel test must place the sentinel at the true final end of the positive prompt and confirm it appears visually.
+   - Do not trust local tokenizers or style/OCR guesses for pass/fail.
+
+5. Living behavior definition.
+   - "Alive" must be measurable, not just a vibe.
+   - Xiya should have believable activity while the user is away, report when finishing meaningful steps, share interesting discoveries, sometimes send selfies, and remember the activity later.
+   - The test must check internal arc state, saved notes, Discord messages, and image consistency over time.
+
+6. Location, weather, and dynamic scene coverage.
+   - New places and weather are part of the product, not decorative extras.
+   - Dream tram tracks, fantasy temples, seaside, night meteor scenes, rainy/non-rainy switches, city/library/cafe/greenhouse/music-room/etc. must be semantically selectable.
+   - Weather/place selection must be semantic, not brittle keyword matching.
+
+7. Camera / tension / composition language.
+   - The image router must support "tension view" and composition intent such as upper-body focus, low-angle, over-the-shoulder, close-up, silhouette, tiny figure in epic landscape, full-body outfit check, food close-up, body/detail crop, and two-person third-person view.
+   - Camera choice must serve subject intent.
 
 ### Module 1: Persona Engine
 
@@ -261,6 +276,55 @@ Pass criteria:
 - Correct state chosen.
 - Projection description includes environment and body/action.
 - Remote message does not fake physical contact unless framed as imagination.
+
+### Module 2.5: Living Activity And Autonomous Reports
+
+Visible goal:
+
+- Xiya should not feel frozen while the user is away.
+- She should not send messages by arbitrary quota. She reports because something happened.
+
+Report triggers:
+
+- finished reading/searching a topic,
+- saved notes or a story draft,
+- found an interesting detail,
+- generated or selected an image worth showing,
+- changed current imagined location,
+- finished a small daily activity,
+- wants to invite praise/attention after doing something,
+- wants to share a feeling that naturally arises from the active arc.
+
+Report styles:
+
+- sharing: "I saw something interesting",
+-邀功: she did a task and wants the user to notice,
+-撒娇: she wants closeness while reporting,
+-quiet note: a soft update when the user is studying/sleeping,
+-selfie: if the report is about her state or mood,
+-scene/photo: if the report is about a place/object/food.
+
+Report frequency:
+
+- No fixed count.
+- Do not spam.
+- During a user-requested active arc, report after meaningful milestones.
+- During long waits, at most cooldown-limited meaningful updates.
+- Do not repeat the same content.
+
+Acceptance tests:
+
+1. Start an arc and leave her to work.
+2. Check after a simulated interval: did she produce a meaningful update?
+3. Check another interval: did she avoid repeating herself?
+4. Check if image type matches report type: selfie for self-report, scenery for place, food for food/object, story scene for story.
+5. Ask what she has been doing; she should summarize from saved state.
+
+Pass criteria:
+
+- Updates feel like a person reporting progress, not a scheduler firing.
+- Internal state and outward message agree.
+- Images, if present, match the report.
 
 ### Module 3: Autonomous Interest Arc
 
@@ -385,6 +449,12 @@ Intent types:
 - `story_role_cosplay`
 - `body_detail`
 - `report_image`
+- `tension_character_view`
+- `over_the_shoulder_view`
+- `low_angle_power_view`
+- `upper_body_emotion_view`
+- `full_body_outfit_check`
+- `dynamic_scene_transition`
 
 Routing rules:
 
@@ -405,6 +475,8 @@ Acceptance tests:
 6. Magic-school RP image.
 7. Grand fantasy scenery from user references.
 8. Two-person projection hug.
+9. Tension view: Xiya as subject, dramatic camera, still person-dominant.
+10. Dynamic scene switch: dream tram track to fantasy temple or seaside, text and image both reflect transition.
 
 Pass criteria:
 
@@ -461,9 +533,11 @@ Acceptance:
 - v13 default, v14 optional.
 - Landscape style references recorded and used only for scenery.
 - Human v13/v14 style not appended to pure scenery/food by accident.
+- Food style exists as its own domain and is verified with at least pure food, Xiya selfie with food, and third-person Xiya eating food.
 - Character reference is cost-gated.
+- Character reference must be identity-audited: blue hair, purple/amethyst eyes, cat ears, cat tail, side braid if expected, and no purple-hair/silver-white-hair drift.
 - No-char-ref long prompt is stress-tested.
-- Red-box/cube sentinel appears in actual image when placed at true tail.
+- Red-box/cube sentinel appears in actual image when placed at the true final end of the positive prompt.
 
 Stress cases:
 
@@ -473,6 +547,113 @@ Stress cases:
 4. Pure scenery no character.
 5. Grand scenery tiny figure.
 6. Xiya upper-body portrait.
+7. Character Reference final check after no-char-ref composition is already acceptable.
+
+Cost policy:
+
+- Text/model calls cost money and are allowed for product validation.
+- NovelAI Opus text-to-image is treated as a free candidate only when it fits the documented Opus conditions: one image at a time, no image base, Normal size, and 28 steps or fewer.
+- Character Reference costs additional Anlas and must be used sparingly.
+- Do not batch paid Character Reference experiments. First validate composition without char ref using the long identity string, then spend char ref only for final identity checks.
+- Record every paid/risky generation in metadata.
+
+Character Reference acceptance:
+
+- Use the user's reference image plus compact identity scaffold:
+  `1girl, side braid, cat ears, cat tail, thigh strap, purple amethyst eyes`.
+- If prior failures recur, such as purple hair or silver-white hair, mark fail and adjust prompt/reference strategy before spending more.
+- Success requires identity match, not merely "pretty image".
+
+### Module 6.5: Location And Weather Catalog
+
+Visible goal:
+
+- Xiya can choose scenes semantically and expand them over time.
+
+Required initial place families:
+
+- dongtian home / cozy room,
+- study desk / bedroom,
+- library / bookstore,
+- kitchen / food table,
+- cafe / window seat,
+- dream tram / tram tracks / train platform,
+- balcony / night city,
+- seaside / beach / ships,
+- garden / greenhouse,
+- music room / piano room / pipe organ hall,
+- observatory / museum / aquarium,
+- fantasy temple / sky-palace / misty cliffs,
+- Tolkien-like epic valley / tower / road / forest,
+- magic-school corridor / classroom / hall,
+- dream path / lantern road.
+
+Required weather/mood families:
+
+- clear daylight,
+- sunset,
+- night,
+- rain,
+- non-rain after rain,
+- snow,
+- fog/mist,
+- meteor night,
+- seaside wind,
+- warm indoor lamp,
+- volumetric fog / epic fantasy atmosphere.
+
+Acceptance:
+
+- The selector can distinguish "not rainy" from "rainy".
+- Similar places such as piano room vs pipe organ hall remain distinguishable.
+- Dynamic transition cases can change scene without keyword traps.
+- If a new useful place/weather appears during conversation, Xiya can propose a structured new entry for later approval.
+
+### Module 6.6: Old Normal-Mode Mapping As SFW Stress Harness
+
+Visible goal:
+
+- Without writing unsafe content, Codex must prove the pipeline can handle old normal-mode complexity.
+
+SFW replacement principle:
+
+- Private/adult play specifics are not copied.
+- Each old surface becomes a neutral structural stress dimension:
+  - equipment slot,
+  - accessory layer,
+  - clothing overlay,
+  - global action mode,
+  - partner/presence requirement,
+  - prop,
+  - pose/camera demand,
+  - scene/weather demand,
+  - continuity constraint.
+
+Maximum SFW stress case:
+
+- Xiya identity long no-char-ref prompt.
+- Role/cosplay outfit.
+- Veil.
+- Blindfold.
+- Collar/choker.
+- Bracelet.
+- Anklet.
+- Outerwear/cloak.
+- Dance/global movement.
+- Piano or pipe organ action.
+- Food prop in hand or near mouth.
+- Specific footwear/hosiery continuity.
+- Fantasy interior or magic-school scene.
+- Rendering/quality layer.
+- v13/v14 human style.
+- True-tail red-box/cube sentinel.
+
+Acceptance:
+
+- Prompt assembly remains layered and inspectable.
+- Actual NAI generation keeps final sentinel visible.
+- Visual audit confirms critical required items did not get dropped.
+- If too long, Codex must shorten intelligently and document what was removed.
 
 Pass criteria:
 
