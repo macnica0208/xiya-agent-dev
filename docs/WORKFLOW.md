@@ -123,6 +123,18 @@ There are two different Discord surfaces:
 
 If no Codex report surface is configured, report in the Codex chat and local Markdown/Git only. Use Xiya's Discord channel only for acceptance cases the user needs to see in context.
 
+Current DM report route:
+
+- Codex/test bot DM to the user is verified.
+- Smoke message IDs: `1502779119602106458`, `1502779570410094673`.
+- Helper script: `scripts/post_codex_dm_report.py`.
+- Runtime recipient/channel config lives in ignored `runtime_data/codex_report_dm_config.json`.
+- Use:
+
+```powershell
+python .\scripts\post_codex_dm_report.py --content "report text"
+```
+
 ## Git Rules
 
 Current safe remote:
