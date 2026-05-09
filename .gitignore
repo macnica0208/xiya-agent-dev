@@ -1,0 +1,70 @@
+# Secrets and local credentials
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*token*
+*secret*
+*credential*
+
+# Runtime, generated data, private assets
+runtime_data/
+private_assets/
+reports/
+db_backups/
+debug/
+imports/
+.opencode/
+
+# Databases and state snapshots
+*.db
+*.db.bak*
+*.sqlite
+*.sqlite3
+state.json
+state.json.*
+novel_workspace.json
+
+# Logs
+*.log
+*.err
+*.err.log
+
+# Local archives and migration payloads
+*.tar
+*.tar.gz
+*.zip
+*.7z
+*.rar
+*.sha256.txt
+
+# Historical local backups
+*_backup*/
+_backup*/
+_backup_*/
+_checkpoint*/
+*.bak
+*.bak*
+*.bak.*
+*.snapshot.*
+BACKUP_*.py
+CODEX_*BACKUP*
+xiya_agent_v2.bak.*/
+
+# Python / tooling caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / editor / OS noise
+node_modules/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
