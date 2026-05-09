@@ -180,6 +180,31 @@ Do not rerun only for tiny taste differences unless the image undermines the sce
 
 ## Product Modules
 
+## Parallel Required Workstreams
+
+The autonomous SFW interest arc is the main product story, but it does not replace earlier required work. Codex must keep these workstreams alive and verify them with evidence:
+
+1. Story / co-writing / roleplay three-mode acceptance.
+   - Must be re-tested as a real linked flow.
+   - Co-written final text must be saved in full as `.txt` or `.md`.
+   - RP must remember the saved co-writing.
+   - RP images must match world and outfit. A magic-school scene with default hoodie is a failure.
+
+2. Food and scenery style domains.
+   - User-provided landscape prompt references must become a scenery style profile.
+   - Food style must be designed as its own domain.
+   - Human v13/v14 style must not be accidentally appended to pure food or pure scenery prompts.
+
+3. Old normal-mode maximum mapping.
+   - Codex owns the schema and prompt-budget behavior for old normal-mode surfaces.
+   - DS or other isolated workers may write concrete normal/private content later, but Codex must make the structure work.
+   - Accessories/global modes such as veil, blindfold, collar, bracelet, anklet, outerwear, dance, role outfit, props, and old play/equipment surfaces must be mappable.
+
+4. NAI long prompt / tail survival.
+   - Dry-run is not enough.
+   - NovelAI can return an image while silently ignoring overlong tail content.
+   - A real red-box/cube sentinel test must place the sentinel after all normal layers and confirm it appears visually.
+
 ### Module 1: Persona Engine
 
 Visible goal:
